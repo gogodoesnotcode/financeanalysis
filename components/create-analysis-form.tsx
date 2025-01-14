@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { PlusCircle } from 'lucide-react'
-import { useToast } from '@/components/ui/use-toast'
+import { useToast } from '@/hooks/use-toast'
 import {
   Sheet,
   SheetContent,
@@ -27,19 +27,26 @@ export function CreateAnalysisForm() {
   const { toast } = useToast()
 
   async function handleSubmit(formData: FormData) {
-    formData.append('fileType', fileType)
-    const result = await createAnalysis(formData)
-    
-    if (result.success) {
-      setOpen(false)
-      toast({
-        title: 'Success',
-        description: 'Analysis entry created successfully',
-      })
-    } else {
+    try {
+      // Add your form submission logic here
+      const result = await createAnalysis(formData)
+      if (result.success) {
+        setOpen(false)
+        toast({
+          title: 'Success',
+          description: 'Analysis entry created successfully',
+        })
+      } else {
+        toast({
+          title: 'Error',
+          description: result.error,
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
       toast({
         title: 'Error',
-        description: result.error,
+        description: 'Failed to create analysis entry',
         variant: 'destructive',
       })
     }

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { PlusCircle } from 'lucide-react'
-import { useToast } from '@/components/ui/use-toast'
+import { useToast } from '@/hooks/use-toast'
 import {
   Sheet,
   SheetContent,
@@ -20,18 +20,26 @@ export function CreatePostForm() {
   const { toast } = useToast()
 
   async function handleSubmit(formData: FormData) {
-    const result = await createBlog(formData)
-    
-    if (result.success) {
-      setOpen(false)
-      toast({
-        title: 'Success',
-        description: 'Blog post created successfully',
-      })
-    } else {
+    try {
+      // Add your form submission logic here
+      const result = await createBlog(formData)
+      if (result.success) {
+        setOpen(false)
+        toast({
+          title: 'Success',
+          description: 'Blog post created successfully',
+        })
+      } else {
+        toast({
+          title: 'Error',
+          description: result.error,
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
       toast({
         title: 'Error',
-        description: result.error,
+        description: 'Failed to create blog post',
         variant: 'destructive',
       })
     }

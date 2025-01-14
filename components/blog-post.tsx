@@ -1,6 +1,13 @@
 import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { BlogPost } from '@/types/blog'
+
+interface BlogPost {
+  id: string
+  title: string
+  content: string
+  imageUrl?: string
+  createdAt: Date
+}
 
 interface BlogPostProps {
   post: BlogPost

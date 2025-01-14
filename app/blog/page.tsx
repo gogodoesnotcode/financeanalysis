@@ -1,6 +1,6 @@
 import { getBlogs } from '@/app/actions/blog'
-import { CreatePostForm } from '@/components/blog/create-post-form'
-import { BlogPostCard } from '@/components/blog/blog-post'
+import { CreatePostForm } from '@/components/create-post-form'
+import { BlogPostCard } from '@/components/blog-post'
 
 export default async function Blog() {
   const { data: posts = [] } = await getBlogs()

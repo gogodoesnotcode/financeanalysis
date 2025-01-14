@@ -9,7 +9,7 @@ export default function Home() {
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-orange-400/20 rounded-lg" />
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-4YUN0aUQnnb8udqriTrL9mK7dehywn.png"
+            src="/assets/geetika.jpg"
             alt="Profile"
             width={600}
             height={600}
@@ -17,7 +17,7 @@ export default function Home() {
           />
           <div className="flex justify-center space-x-6 mt-6 relative z-10">
             <Link 
-              href="https://linkedin.com/in/yourusername" 
+              href="https://www.linkedin.com/in/geetika-naidu-gn7" 
               className="hover:text-emerald-400 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -25,13 +25,13 @@ export default function Home() {
               <Linkedin size={24} />
             </Link>
             <Link 
-              href="mailto:your.email@example.com"
+              href="mailto:geetikanaidu7@gmail.com"
               className="hover:text-emerald-400 transition-colors"
             >
               <Mail size={24} />
             </Link>
             <Link 
-              href="tel:+1234567890"
+              href="tel:+917999712569"
               className="hover:text-emerald-400 transition-colors"
             >
               <Phone size={24} />

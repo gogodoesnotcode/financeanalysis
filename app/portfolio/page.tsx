@@ -1,6 +1,6 @@
 import { getAnalyses } from '@/app/actions/analysis'
-import { CreateAnalysisForm } from '@/components/analysis/create-analysis-form'
-import { MediaViewer } from '@/components/analysis/media-viewer'
+import { CreateAnalysisForm } from '@/components/create-analysis-form'
+import { MediaViewer } from '@/components/media-viewer'
 
 export default async function AnalysisAndReports() {
   const { data: entries = [] } = await getAnalyses()

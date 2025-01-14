@@ -9,7 +9,7 @@ export default function Home() {
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-orange-400/20 rounded-lg" />
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-4YUN0aUQnnb8udqriTrL9mK7dehywn.png"
+            src="/assets/geetika.jpg"
             alt="Profile"
             width={600}
             height={600}

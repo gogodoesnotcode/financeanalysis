@@ -1,22 +1,20 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Toaster } from "@/components/ui/toaster"
 
-// Configure font with display option
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap', // Add display swap for better loading performance
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Personal Portfolio',
   description: 'Professional portfolio website',
-  // Add some additional metadata for better SEO
-  viewport: 'width=device-width, initial-scale=1',
-  robots: 'index, follow',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -25,10 +23,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body className="bg-zinc-900 text-white min-h-screen flex flex-col">
+    <html lang="en">
+      <body className={`${inter.className} bg-zinc-900 text-white min-h-screen flex flex-col`}>
         <Navigation />
-        <main className="flex-1 container mx-auto px-4">
+        <main className="flex-1">
           {children}
         </main>
         <Footer />
@@ -37,3 +35,4 @@ export default function RootLayout({
     </html>
   )
 }
+

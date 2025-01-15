@@ -6,18 +6,33 @@ import { put } from '@vercel/blob'
 
 export async function createAnalysis(formData: FormData) {
   try {
-    const title = formData.get('title') as string
-    const fileType = formData.get('fileType') as 'pdf' | 'audio'
-    const file = formData.get('file') as File
+    const title = formData.get('title')
+    const fileType = formData.get('fileType')
+    const file = formData.get('file')
 
-    if (!file || file.size === 0) {
-      throw new Error('No file provided')
+    // Validate inputs
+    if (!title || typeof title !== 'string') {
+      throw new Error('Title is required')
     }
 
+    if (!fileType || typeof fileType !== 'string' || !['pdf', 'audio'].includes(fileType)) {
+      throw new Error('Valid file type (pdf or audio) is required')
+    }
+
+    if (!file || !(file instanceof File) || file.size === 0) {
+      throw new Error('Valid file is required')
+    }
+
+    // Upload file to blob storage
     const blob = await put(file.name, file, {
       access: 'public',
     })
 
+    if (!blob || !blob.url) {
+      throw new Error('File upload failed')
+    }
+
+    // Create database entry
     const analysis = await prisma.analysis.create({
       data: {
         title,
@@ -29,8 +44,10 @@ export async function createAnalysis(formData: FormData) {
     revalidatePath('/portfolio')
     return { success: true, data: analysis }
   } catch (error) {
-    console.error('Error creating analysis:', error)
-    return { success: false, error: 'Failed to create analysis entry' }
+    // Proper error handling
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create analysis entry'
+    console.error('Error creating analysis:', errorMessage)
+    return { success: false, error: errorMessage }
   }
 }
 
@@ -43,8 +60,9 @@ export async function getAnalyses() {
     })
     return { success: true, data: analyses }
   } catch (error) {
-    console.error('Error fetching analyses:', error)
-    return { success: false, error: 'Failed to fetch analyses' }
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch analyses'
+    console.error('Error fetching analyses:', errorMessage)
+    return { success: false, error: errorMessage }
   }
 }
 

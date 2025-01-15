@@ -10,7 +10,7 @@ datasource db {
 model Blog {
   id        String   @id @default(cuid())
   title     String
-  content   String   @db.Text
+  content   String
   imageUrl  String?
   createdAt DateTime @default(now())
 }
@@ -19,7 +19,6 @@ model Analysis {
   id        String   @id @default(cuid())
   title     String
   fileUrl   String
-  fileType  String
+  fileType  String   @default("pdf")
   createdAt DateTime @default(now())
 }
-

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { PlusCircle } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { createAnalysis } from '@/app/actions/analysis'
 import {
   Sheet,
   SheetContent,
@@ -19,17 +20,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { createAnalysis } from '@/app/actions/analysis'
 
 export function CreateAnalysisForm() {
   const [open, setOpen] = useState(false)
   const [fileType, setFileType] = useState<'pdf' | 'audio'>('pdf')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
   async function handleSubmit(formData: FormData) {
     try {
-      // Add your form submission logic here
-      const result = await createAnalysis(formData)
+      setIsSubmitting(true)
+
+      // Validate form data
+      const title = formData.get('title')
+      const file = formData.get('file')
+
+      if (!title || typeof title !== 'string') {
+        throw new Error('Title is required')
+      }
+
+      if (!file || !(file instanceof File) || file.size === 0) {
+        throw new Error('Please select a file')
+      }
+
+      // Create a new FormData instance
+      const data = new FormData()
+      data.append('title', title)
+      data.append('file', file)
+      data.append('fileType', fileType)
+
+      const result = await createAnalysis(data)
+      
       if (result.success) {
         setOpen(false)
         toast({
@@ -46,9 +67,11 @@ export function CreateAnalysisForm() {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to create analysis entry',
+        description: error instanceof Error ? error.message : 'Failed to create analysis entry',
         variant: 'destructive',
       })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -74,7 +97,11 @@ export function CreateAnalysisForm() {
             />
           </div>
           <div>
-            <Select value={fileType} onValueChange={(value: 'pdf' | 'audio') => setFileType(value)}>
+            <Select 
+              value={fileType} 
+              onValueChange={(value: 'pdf' | 'audio') => setFileType(value)}
+              defaultValue="pdf"
+            >
               <SelectTrigger className="bg-zinc-800 border-zinc-700">
                 <SelectValue placeholder="Select file type" />
               </SelectTrigger>
@@ -96,8 +123,9 @@ export function CreateAnalysisForm() {
           <Button 
             type="submit" 
             className="w-full bg-teal-600 hover:bg-teal-700"
+            disabled={isSubmitting}
           >
-            Upload
+            {isSubmitting ? 'Uploading...' : 'Upload'}
           </Button>
         </form>
       </SheetContent>

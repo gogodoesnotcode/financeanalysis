@@ -10,6 +10,8 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-orange-400/20 rounded-lg" />
           <Image
             src="/assets/geetika.jpg"
+
+            
             alt="Profile"
             width={600}
             height={600}
@@ -18,6 +20,7 @@ export default function Home() {
           <div className="flex justify-center space-x-6 mt-6 relative z-10">
             <Link 
               href="https://www.linkedin.com/in/geetika-naidu-gn7" 
+
               className="hover:text-emerald-400 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -26,6 +29,7 @@ export default function Home() {
             </Link>
             <Link 
               href="mailto:geetikanaidu7@gmail.com"
+
               className="hover:text-emerald-400 transition-colors"
             >
               <Mail size={24} />

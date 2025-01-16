@@ -92,7 +92,7 @@ export function Navigation() {
               <span className={cn(
                 "transition-opacity duration-200",
                 isCollapsed ? "md:hidden" : "block"
-              )}>Blog</span>
+              )}>Insights</span>
             </Link>
             <Link 
               href="/contact" 

@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { put } from '@vercel/blob'
+import { BlogPost } from '@/types/blog'
 
 export async function createBlog(formData: FormData) {
   try {
@@ -53,7 +54,7 @@ export async function createBlog(formData: FormData) {
   } catch (e) {
     return { 
       success: false, 
-      error: 'Failed to create blog post'
+      error: 'Failed to create insight' 
     }
   }
 }
@@ -65,6 +66,7 @@ export async function getBlogs() {
         createdAt: 'desc',
       },
     })
+  
     return { success: true, data: blogs }
   } catch (e) {
     return { success: false, error: 'Failed to fetch blog posts' }

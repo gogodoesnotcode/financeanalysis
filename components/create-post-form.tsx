@@ -59,7 +59,7 @@ export function CreatePostForm() {
       </SheetTrigger>
       <SheetContent className="w-[400px] sm:w-[540px] bg-zinc-900 border-zinc-800">
         <SheetHeader>
-          <SheetTitle className="text-white">Create New Blog Post</SheetTitle>
+          <SheetTitle className="text-white">Create New Insight</SheetTitle>
         </SheetHeader>
         <form action={handleSubmit} className="space-y-4 mt-4">
           <div>
@@ -108,7 +108,7 @@ export function CreatePostForm() {
             className="w-full bg-teal-600 hover:bg-teal-700"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Creating...' : 'Create Post'}
+            {isSubmitting ? 'Creating...' : 'Create Insight'}
           </Button>
         </form>
       </SheetContent>

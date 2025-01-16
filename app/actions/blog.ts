@@ -6,14 +6,34 @@ import { put } from '@vercel/blob'
 
 export async function createBlog(formData: FormData) {
   try {
-    const title = formData.get('title') as string
-    const content = formData.get('content') as string
-    const image = formData.get('image') as File | null
+    // Extract and validate all fields
+    const title = formData.get('title')
+    const author = formData.get('author')
+    const content = formData.get('content')
+    const pin = formData.get('pin')
+    const image = formData.get('image')
+
+    // Validate required fields
+    if (!title || typeof title !== 'string') {
+      return { success: false, error: 'Title is required' }
+    }
+
+    if (!author || typeof author !== 'string') {
+      return { success: false, error: 'Author is required' }
+    }
+
+    if (!content || typeof content !== 'string') {
+      return { success: false, error: 'Content is required' }
+    }
+
+    if (!pin || pin !== '7974') {
+      return { success: false, error: 'Invalid PIN' }
+    }
 
     let imageUrl: string | undefined
 
-    if (image && image.size > 0) {
-      const blob = await put(image.name, image, {
+    if (image instanceof File && image.size > 0) {
+      const blob = await put(`blog-${Date.now()}-${image.name}`, image, {
         access: 'public',
       })
       imageUrl = blob.url
@@ -21,17 +41,20 @@ export async function createBlog(formData: FormData) {
 
     const blog = await prisma.blog.create({
       data: {
-        title,
-        content,
+        title: title.trim(),
+        author: author.trim(),
+        content: content.trim(),
         imageUrl,
       },
     })
 
     revalidatePath('/blog')
     return { success: true, data: blog }
-  } catch (error) {
-    console.error('Error creating blog:', error)
-    return { success: false, error: 'Failed to create blog post' }
+  } catch (e) {
+    return { 
+      success: false, 
+      error: 'Failed to create blog post'
+    }
   }
 }
 
@@ -43,8 +66,7 @@ export async function getBlogs() {
       },
     })
     return { success: true, data: blogs }
-  } catch (error) {
-    console.error('Error fetching blogs:', error)
+  } catch (e) {
     return { success: false, error: 'Failed to fetch blog posts' }
   }
 }

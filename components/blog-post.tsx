@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 interface BlogPost {
   id: string
   title: string
+  author: string
   content: string
   imageUrl?: string
   createdAt: Date
@@ -18,15 +19,16 @@ export function BlogPostCard({ post }: BlogPostProps) {
     <Card className="bg-teal-800 text-white">
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
-        <p className="text-sm text-zinc-300">
-          {new Date(post.createdAt).toLocaleDateString()}
-        </p>
+        <div className="flex justify-between text-sm text-zinc-300">
+          <span>By {post.author}</span>
+          <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+        </div>
       </CardHeader>
       <CardContent>
         {post.imageUrl && (
           <div className="relative w-full h-[200px] mb-4">
             <Image
-              src={post.imageUrl}
+              src={post.imageUrl || "/placeholder.svg"}
               alt={post.title}
               fill
               className="object-cover rounded-md"

@@ -6,7 +6,6 @@ export default function AnalysisAndReports() {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-2">Analysis and Reports</h1>
-        <p className="text-zinc-400 mb-8">(Once in 15 days update)</p>
         <div className="grid gap-8">
           <div className="text-center py-12">
             <p className="text-zinc-400 mb-4">No analysis or reports yet.</p>

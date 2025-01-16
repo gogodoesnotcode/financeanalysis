@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+const VALID_PIN = "7974"
+
 export function CreateAnalysisForm() {
   const [open, setOpen] = useState(false)
   const [fileType, setFileType] = useState<'pdf' | 'audio'>('pdf')
@@ -31,7 +33,13 @@ export function CreateAnalysisForm() {
     try {
       setIsSubmitting(true)
 
-      // Validate form data
+      // Validate PIN
+      const pin = formData.get('pin')
+      if (pin !== VALID_PIN) {
+        throw new Error('Invalid PIN')
+      }
+
+      // Validate other form data
       const title = formData.get('title')
       const file = formData.get('file')
 
@@ -116,6 +124,15 @@ export function CreateAnalysisForm() {
               name="file"
               type="file"
               accept={fileType === 'pdf' ? '.pdf' : 'audio/*'}
+              required
+              className="bg-zinc-800 border-zinc-700"
+            />
+          </div>
+          <div>
+            <Input
+              name="pin"
+              type="password"
+              placeholder="Enter PIN"
               required
               className="bg-zinc-800 border-zinc-700"
             />

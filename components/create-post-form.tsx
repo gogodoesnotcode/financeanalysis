@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { PlusCircle } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { createBlog } from '@/app/actions/blog'
 import {
   Sheet,
   SheetContent,
@@ -13,16 +14,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { createBlog } from '@/app/actions/blog'
 
 export function CreatePostForm() {
   const [open, setOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const { toast } = useToast()
 
   async function handleSubmit(formData: FormData) {
+    setIsSubmitting(true)
     try {
-      // Add your form submission logic here
       const result = await createBlog(formData)
+      
       if (result.success) {
         setOpen(false)
         toast({
@@ -42,6 +44,8 @@ export function CreatePostForm() {
         description: 'Failed to create blog post',
         variant: 'destructive',
       })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -67,6 +71,14 @@ export function CreatePostForm() {
             />
           </div>
           <div>
+            <Input
+              name="author"
+              placeholder="Author Name"
+              required
+              className="bg-zinc-800 border-zinc-700"
+            />
+          </div>
+          <div>
             <Textarea
               name="content"
               placeholder="Write your post content..."
@@ -82,11 +94,21 @@ export function CreatePostForm() {
               className="bg-zinc-800 border-zinc-700"
             />
           </div>
+          <div>
+            <Input
+              name="pin"
+              type="password"
+              placeholder="Enter PIN"
+              required
+              className="bg-zinc-800 border-zinc-700"
+            />
+          </div>
           <Button 
             type="submit" 
             className="w-full bg-teal-600 hover:bg-teal-700"
+            disabled={isSubmitting}
           >
-            Create Post
+            {isSubmitting ? 'Creating...' : 'Create Post'}
           </Button>
         </form>
       </SheetContent>

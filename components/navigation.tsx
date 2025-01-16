@@ -94,17 +94,6 @@ export function Navigation() {
                 isCollapsed ? "md:hidden" : "block"
               )}>Insights</span>
             </Link>
-            <Link 
-              href="/contact" 
-              className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-zinc-700 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <Mail className="h-5 w-5 flex-shrink-0" />
-              <span className={cn(
-                "transition-opacity duration-200",
-                isCollapsed ? "md:hidden" : "block"
-              )}>Contact</span>
-            </Link>
           </nav>
         </div>
 

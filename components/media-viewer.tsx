@@ -2,7 +2,7 @@
 
 interface MediaViewerProps {
   fileUrl: string
-  fileType: 'pdf' | 'audio'
+  fileType: 'pdf' | 'audio' | string
   title: string
 }
 

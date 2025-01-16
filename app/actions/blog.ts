@@ -31,13 +31,13 @@ export async function createBlog(formData: FormData) {
       return { success: false, error: 'Invalid PIN' }
     }
 
-    let imageUrl: string | undefined
+    let imageUrl: string | null = null;
 
     if (image instanceof File && image.size > 0) {
       const blob = await put(`blog-${Date.now()}-${image.name}`, image, {
         access: 'public',
-      })
-      imageUrl = blob.url
+      });
+      imageUrl = blob.url;
     }
 
     const blog = await prisma.blog.create({
@@ -47,7 +47,8 @@ export async function createBlog(formData: FormData) {
         content: content.trim(),
         imageUrl,
       },
-    })
+    });
+    
 
     revalidatePath('/blog')
     return { success: true, data: blog }

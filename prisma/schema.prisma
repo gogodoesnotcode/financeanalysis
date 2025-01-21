@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FileType {
+  pdf
+  audio
+}
+
 model Blog {
   id        String   @id @default(cuid())
   title     String
@@ -20,9 +25,8 @@ model Analysis {
   id        String   @id @default(cuid())
   title     String
   fileUrl   String
-  fileType  String   @default("pdf")
+  fileType  FileType @default(pdf)
   createdAt DateTime @default(now())
 
-  @@check(fileType IN ('pdf', 'audio'))
 }
 

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/db"
 import { put, del } from "@vercel/blob"
+import type { FileType } from "@/types/analysis"
 
 export async function createAnalysis(formData: FormData) {
   try {
@@ -42,7 +43,7 @@ export async function createAnalysis(formData: FormData) {
       data: {
         title,
         fileUrl: blob.url,
-        fileType: fileType as "pdf" | "audio",
+        fileType: fileType as FileType,
       },
     })
 
@@ -66,7 +67,7 @@ export async function getAnalyses() {
       success: true,
       data: analyses.map((analysis) => ({
         ...analysis,
-        fileType: analysis.fileType as "pdf" | "audio",
+        fileType: analysis.fileType.toLowerCase() as FileType,
       })),
     }
   } catch (error) {

@@ -1,8 +1,10 @@
+export type FileType = "pdf" | "audio"
+
 export interface AnalysisEntry {
   id: string
   title: string
   fileUrl: string
-  fileType: "pdf" | "audio"
+  fileType: FileType
   createdAt: Date
 }
 

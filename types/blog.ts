@@ -3,9 +3,7 @@ export interface BlogPost {
   title: string
   author: string
   content: string
-  imageUrl?: string | null
+  imageUrl: string | null | undefined
   createdAt: Date
 }
 
-// Rename the interface but keep BlogPost for backwards compatibility
-export type Insight = BlogPost

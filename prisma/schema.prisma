@@ -22,5 +22,7 @@ model Analysis {
   fileUrl   String
   fileType  String   @default("pdf")
   createdAt DateTime @default(now())
+
+  @@check(fileType IN ('pdf', 'audio'))
 }
 

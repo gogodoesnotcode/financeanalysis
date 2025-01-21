@@ -1,7 +1,8 @@
-import { getAnalyses } from '@/app/actions/analysis'
-import { CreateAnalysisForm } from '@/components/create-analysis-form'
-import { MediaViewer } from '@/components/media-viewer'
-import { Suspense } from 'react'
+import { getAnalyses } from "@/app/actions/analysis"
+import { CreateAnalysisForm } from "@/components/create-analysis-form"
+import { MediaViewer } from "@/components/media-viewer"
+import { Suspense } from "react"
+import type { AnalysisEntry } from "@/types/analysis"
 
 async function Analyses() {
   const { data: entries = [], success } = await getAnalyses()
@@ -17,9 +18,10 @@ async function Analyses() {
 
   return (
     <div className="grid gap-8">
-      {entries.map((entry) => (
+      {entries.map((entry: AnalysisEntry) => (
         <MediaViewer
           key={entry.id}
+          id={entry.id}
           fileUrl={entry.fileUrl}
           fileType={entry.fileType}
           title={entry.title}
@@ -34,6 +36,7 @@ export default function AnalysisAndReports() {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-2">Analysis and Reports</h1>
+        <p className="text-zinc-400 mb-8">(Once in 15 days update)</p>
         <Suspense fallback={<div>Loading analyses...</div>}>
           <Analyses />
         </Suspense>

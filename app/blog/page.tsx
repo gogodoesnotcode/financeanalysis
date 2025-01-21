@@ -1,11 +1,11 @@
-import { getBlogs } from '@/app/actions/blog'
-import { CreatePostForm } from '@/components/create-post-form'
-import { BlogPostCard } from '@/components/blog-post'
-import { Suspense } from 'react'
+import { getBlogs } from "@/app/actions/blog"
+import { CreatePostForm } from "@/components/create-post-form"
+import { BlogPostCard } from "@/components/blog-post"
+import { Suspense } from "react"
 
 async function Posts() {
   const { data: posts = [], success } = await getBlogs()
-  
+
   if (!success || !posts.length) {
     return (
       <div className="text-center py-12">
@@ -14,10 +14,17 @@ async function Posts() {
       </div>
     )
   }
+
   return (
     <div className="grid gap-8">
       {posts.map((post) => (
-        <BlogPostCard key={post.id} post={post} />
+        <BlogPostCard
+          key={post.id}
+          post={{
+            ...post,
+            createdAt: new Date(post.createdAt),
+          }}
+        />
       ))}
     </div>
   )
